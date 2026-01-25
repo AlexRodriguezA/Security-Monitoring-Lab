@@ -1,656 +1,541 @@
-# Security-Monitoring-Lab
+# Screenshots Guide - Security Monitoring Lab
 
-A hands-on cybersecurity lab project demonstrating Windows security event monitoring, audit policy configuration, and log analysis using Event Viewer. This lab maps security events to MITRE ATT&CK techniques and provides practical experience with threat detection and incident response.
-
-## Project Overview
-
-This lab provides practical experience with Windows security monitoring by:
-- Configuring advanced audit policies on Windows 10/11
-- Generating security events through various user actions
-- Analyzing and interpreting Windows security logs
-- Understanding key security event IDs and their significance
-- Mapping security events to MITRE ATT&CK framework techniques
-- Building detection strategies for common attack patterns
-
-Time Required: 1-2 hours
-Skills Gained: Windows security, event logging, audit policies, log analysis, threat detection, MITRE ATT&CK framework
+Complete catalog of all 29 screenshots documenting the lab setup, configuration, and event analysis.
 
 ---
 
-## Learning Objectives
+## Screenshot Organization
 
-By completing this lab, you will:
-- Understand Windows audit policies and their configuration
-- Generate and capture security events in Event Viewer
-- Interpret critical security event IDs (4624, 4625, 4688)
-- Analyze authentication and process creation logs
-- Map security events to MITRE ATT&CK techniques
-- Develop foundational skills for security monitoring and incident response
-- Understand how adversaries operate and how to detect them
-- Create detection rules based on observed security events
-
----
-
-## Prerequisites
-
-Host Machine: Windows
-
-Virtualization Software:
-- VirtualBox (free, recommended)
-
-Windows ISO:
-- Windows 10/11 evaluation ISO (free from Microsoft)
-- Or licensed Windows installation media
-
-System Requirements:
-- Minimum 4GB RAM allocated to VM
-- 2+ CPU cores
-- 30GB disk space for Windows VM
+Screenshots are organized by category:
+1. Domain Controller Setup (DC2)
+2. Group Policy Configuration
+3. Client Workstation Setup (CLIENT11)
+4. Event Viewer - Event 4624 (Successful Logon)
+5. Event Viewer - Event 4625 (Failed Logon)
+6. Event Viewer - Event 4688 (Process Creation)
+7. Audit Policy Verification
+8. Network Configuration
+9. Active Directory Structure
 
 ---
 
-## Setup Instructions
+## 1. Domain Controller Setup (DC2)
 
-### Step 1: Install Virtualization Software
+### Screenshot 1: DC2 VM Overview
+**File:** uploads/1.png
+**Description:** Domain Controller (DC2) running Windows Server 2022 with Group Policy Management Console open
+**Key Elements:**
+- VM name: DC2
+- Operating System: Windows Server 2022
+- Group Policy Management Console (GPMC) interface visible
+- Domain: VANTAGEHUB.COM
+- Status: Active and running
 
-VirtualBox (Recommended):
-```
-Download from: https://www.virtualbox.org/wiki/Downloads
-Follow the installation wizard for your OS
-```
+**Significance:** Shows the domain controller is properly configured and ready for policy management
 
-### Step 2: Download Windows ISO
-
-1. Visit Microsoft Evaluation Center: https://www.microsoft.com/en-us/evalcenter
-2. Download Windows 10 or Windows 11 evaluation ISO
-3. Save to a known location on your host machine
-
-### Step 3: Create Virtual Machine
-
-In VirtualBox:
-1. Click "New" - Name: "Security-Lab-VM"
-2. Type: Microsoft Windows
-3. Version: Windows 10 (64-bit) or Windows 11
-4. Memory: 4096 MB (4GB)
-5. Storage: 30GB dynamic allocation
-6. Mount the ISO and complete Windows installation
-
-### Step 4: Install Guest Additions (VirtualBox)
-
-VirtualBox:
-```
-Devices - Insert Guest Additions CD Image
-Run the installer inside the VM
-```
+**MITRE Relevance:** T1078 - Valid Accounts (domain-based authentication infrastructure)
 
 ---
 
-## Lab Configuration
+### Screenshot 2: DC2 Desktop Environment
+**File:** uploads/2.png
+**Description:** DC2 desktop showing Windows Server 2022 interface
+**Key Elements:**
+- Windows Server 2022 Standard Evaluation
+- License valid for 180 days
+- Build: 20348.1547
+- System time: 4:07 PM, 1/22/2026
 
-### Step 1: Open Local Security Policy
-
-1. Press Win + R
-2. Type: secpol.msc
-3. Press Enter
-
-### Step 2: Configure Audit Policies
-
-Navigate to: Advanced Audit Policy Configuration - Audit Policies
-
-Enable Logon/Logoff Auditing:
-```
-Path: Audit Policies - Logon/Logoff
-Policy: Audit Logon
-Settings: Success, Failure
-```
-
-Enable Account Logon Auditing:
-```
-Path: Audit Policies - Account Logon
-Policy: Audit Credential Validation
-Settings: Success, Failure
-```
-
-Enable Detailed Tracking:
-```
-Path: Audit Policies - Detailed Tracking
-Policy: Audit Process Creation
-Settings: Success
-```
-
-Apply all policies and close Local Security Policy.
-
-### Step 3: Verify Audit Policies with Command Line
-
-Open Command Prompt as Administrator and run:
-
-```
-auditpol /get /category:*
-```
-
-This verifies that your audit policies are properly configured at the system level.
+**Significance:** Confirms Windows Server 2022 is properly installed and running
 
 ---
 
-## Lab Execution
+### Screenshot 3: DC2 Network Configuration
+**File:** uploads/3.png
+**Description:** Network adapter configuration on DC2
+**Key Elements:**
+- NIC 1: NAT adapter (Internet access)
+- NIC 2: Host-Only adapter (Internal domain network)
+- Static IP: 172.16.0.1/24
+- DNS: 127.0.0.1 (local DNS server)
 
-### Generate Security Events
-
-Event 1: Successful Logon (4624)
-```
-1. Log out of the current user session
-   - Press Ctrl + Alt + Delete - Sign out
-2. Log back in with correct credentials
-3. This generates Event ID 4624
-```
-
-Event 2: Failed Logon (4625)
-```
-1. At the login screen, attempt to log in
-2. Enter WRONG password 2-3 times
-3. Each failed attempt generates Event ID 4625
-```
-
-Event 3: Process Creation (4688)
-```
-1. Open Notepad
-   - Press Win + R - type "notepad" - Enter
-2. Open Calculator
-   - Press Win + R - type "calc" - Enter
-3. Open Command Prompt
-   - Press Win + R - type "cmd" - Enter
-4. Each application launch generates Event ID 4688
-```
+**Significance:** Demonstrates proper network segmentation for domain infrastructure
 
 ---
 
-## Log Analysis
+## 2. Group Policy Configuration
 
-### Step 1: Open Event Viewer
+### Screenshot 4: Group Policy Management Console
+**File:** uploads/4.png
+**Description:** GPMC showing domain structure and GPO creation
+**Key Elements:**
+- Forest: VANTAGEHUB.COM
+- Domain: VANTAGEHUB.COM
+- Organizational Units visible
+- GPO creation menu open
 
-1. Press Win + R
-2. Type: eventvwr.msc
-3. Press Enter
+**Significance:** Shows GPO management interface and domain structure
 
-### Step 2: Navigate to Security Logs
-
-```
-Event Viewer (Local)
-- Windows Logs
-  - Security
-```
-
-### Step 3: Filter by Event ID
-
-Filter for Event ID 4624 (Successful Logon):
-1. Right-click "Security" - Filter Current Log
-2. Event IDs: 4624
-3. Click OK
-
-Filter for Event ID 4625 (Failed Logon):
-1. Right-click "Security" - Filter Current Log
-2. Event IDs: 4625
-3. Click OK
-
-Filter for Event ID 4688 (Process Creation):
-1. Right-click "Security" - Filter Current Log
-2. Event IDs: 4688
-3. Click OK
+**MITRE Relevance:** T1078 - Valid Accounts (centralized policy enforcement)
 
 ---
 
-## Key Event IDs Explained
+### Screenshot 5: GPO Linked to OU
+**File:** uploads/5.png
+**Description:** Group Policy Object linked to Computer - Workstation OU
+**Key Elements:**
+- GPO Name: Security Monitoring Lab (Audit)
+- Linked to: Computer - Workstation OU
+- Scope: Computer Configuration
+- Status: Applied
 
-### Event ID 4624 - Successful Logon
-
-What it means: A user successfully logged in to the system
-
-Key Fields:
-- Logon Type: 2 (Interactive), 3 (Network), 10 (RemoteInteractive)
-- Account Name: Username that logged in
-- Workstation Name: Computer name
-- Source IP Address: Where the login came from
-
-Example:
-```
-Event ID: 4624
-Task Category: Logon
-Level: Information
-Computer: SECURITY-LAB-VM
-Description: An account was successfully logged on.
-```
-
-MITRE ATT&CK Mapping: T1078 - Valid Accounts
-- Adversaries use valid accounts to maintain access
-- Monitoring 4624 helps detect unauthorized account usage
-- Baseline normal logon patterns to identify anomalies
-
-### Event ID 4625 - Failed Logon
-
-What it means: A login attempt failed (wrong password, account locked, etc.)
-
-Key Fields:
-- Failure Reason: Why the login failed
-- Account Name: Username attempted
-- Workstation Name: Computer name
-- Source IP Address: Where the attempt came from
-
-Example:
-```
-Event ID: 4625
-Task Category: Logon
-Level: Warning
-Computer: SECURITY-LAB-VM
-Description: An account failed to log on.
-Failure Reason: User account locked out
-```
-
-MITRE ATT&CK Mapping: T1110 - Brute Force
-- Adversaries attempt multiple login failures to guess credentials
-- Multiple 4625 events in short timeframe indicate brute force attack
-- Monitoring this event enables early detection of credential attacks
-- Threshold alerting (e.g., 5+ failures in 10 minutes) triggers investigation
-
-### Event ID 4688 - Process Creation
-
-What it means: A new process was created on the system
-
-Key Fields:
-- New Process Name: Full path to the executable
-- Process ID: Unique identifier for the process
-- Parent Process Name: Which process launched this one
-- Command Line: Arguments passed to the process
-
-Example:
-```
-Event ID: 4688
-Task Category: Process Creation
-Level: Information
-Computer: SECURITY-LAB-VM
-Description: A new process has been created.
-New Process Name: C:\Windows\System32\notepad.exe
-Process ID: 0x1234
-```
-
-MITRE ATT&CK Mapping: T1059 - Command and Scripting Interpreter
-- Adversaries execute commands to perform actions on compromised systems
-- Monitoring 4688 reveals what processes are running and their command-line arguments
-- Suspicious processes (cmd.exe, powershell.exe with encoded commands) indicate compromise
-- Parent-child process relationships reveal attack chains
+**Significance:** Confirms GPO is properly linked to the correct organizational unit
 
 ---
 
-## MITRE ATT&CK Framework Integration
+### Screenshot 6: Audit Policy Configuration in GPO
+**File:** uploads/6.png
+**Description:** Advanced Audit Policy Configuration settings in GPO
+**Key Elements:**
+- Audit Logon: Success + Failure
+- Audit Credential Validation: Success + Failure
+- Audit Process Creation: Success
+- Force subcategory settings: Enabled
 
-### Why MITRE ATT&CK Knowledge is Beneficial
+**Significance:** Shows all required audit policies are configured in the GPO
 
-The MITRE ATT&CK framework is a globally-accessible knowledge base of adversary tactics and techniques based on real-world observations. Understanding this framework is critical for security professionals because:
-
-1. Common Language: Provides standardized terminology for discussing threats across organizations and teams
-
-2. Threat Intelligence: Maps real-world adversary behavior to specific techniques, enabling better threat hunting
-
-3. Detection Strategy: Helps identify which events and logs to monitor for specific attack techniques
-
-4. Risk Assessment: Prioritizes security controls based on techniques most relevant to your organization
-
-5. Incident Response: Quickly correlates observed events to known attack patterns for faster response
-
-6. Career Development: Industry-standard framework used by security teams, SOCs, and incident responders
-
-### Event-to-Technique Mapping
-
-This lab demonstrates three critical MITRE ATT&CK techniques:
-
-Technique 1: T1078 - Valid Accounts
-- Tactic: Defense Evasion, Persistence, Privilege Escalation, Initial Access
-- Event ID: 4624 (Successful Logon)
-- Why it matters: Attackers prefer using legitimate credentials over exploits
-- Detection: Monitor for logons outside business hours, from unusual locations, or to sensitive accounts
-- Real-world example: Compromised credentials used to access cloud services
-
-Technique 2: T1110 - Brute Force
-- Tactic: Credential Access
-- Event ID: 4625 (Failed Logon)
-- Why it matters: Brute force is a common initial attack vector
-- Detection: Alert on multiple failed logon attempts (threshold-based)
-- Real-world example: Attackers targeting RDP, SSH, or web application login pages
-
-Technique 3: T1059 - Command and Scripting Interpreter
-- Tactic: Execution
-- Event ID: 4688 (Process Creation)
-- Why it matters: Command execution is how attackers perform actions on compromised systems
-- Detection: Monitor for suspicious process names, command-line arguments, and parent-child relationships
-- Real-world example: PowerShell scripts downloading malware, cmd.exe spawning unusual processes
-
-### Building a Detection Strategy
-
-Using MITRE ATT&CK to improve detection:
-
-1. Identify relevant techniques for your organization
-2. Map techniques to observable events (4624, 4625, 4688, etc.)
-3. Define baseline behavior (normal logons, expected processes)
-4. Create detection rules for anomalies
-5. Implement alerting thresholds
-6. Correlate multiple events to identify attack chains
-
-Example Detection Rule:
-```
-IF (Event 4625 count > 5 in 10 minutes) AND (Source IP = External)
-THEN Alert: Possible brute force attack on [Account]
-```
+**MITRE Relevance:** T1110 - Brute Force (logon auditing), T1059 - Command-Line Interface (process creation)
 
 ---
 
-## Best Practices for Security Monitoring
+### Screenshot 7: Command-Line Capture Setting
+**File:** uploads/7.png
+**Description:** Administrative Templates setting for command-line capture in 4688 events
+**Key Elements:**
+- Setting: Include command line in process creation events
+- Status: Enabled
+- Path: Computer Configuration → Administrative Templates → System → Audit Process Creation
 
-### 1. Baseline Your Environment
+**Significance:** Ensures full command-line arguments are captured in process creation events
 
-Before you can detect anomalies, you need to understand normal behavior:
-- Document typical logon times and locations
-- Identify expected processes and their command lines
-- Record normal user and service account activity
-- Create a baseline of system behavior during normal operations
-
-### 2. Implement Threshold-Based Alerting
-
-Don't alert on every event. Use thresholds to reduce noise:
-- Alert on 5+ failed logons in 10 minutes (brute force indicator)
-- Alert on unusual process creation patterns
-- Alert on logons outside business hours to sensitive accounts
-- Alert on processes spawning from unexpected parent processes
-
-### 3. Correlate Multiple Events
-
-Single events are less meaningful than patterns:
-- Correlate failed logons followed by successful logon (possible compromise)
-- Correlate process creation with command-line arguments (malware execution)
-- Correlate logons from multiple locations in short timeframe (credential theft)
-- Build attack chains by correlating multiple event types
-
-### 4. Monitor Command-Line Arguments
-
-Process names alone are insufficient for detection:
-- cmd.exe is normal, but cmd.exe /c "powershell -enc ..." is suspicious
-- Legitimate processes may have unusual command-line arguments
-- Encoded PowerShell commands are common malware delivery mechanism
-- Monitor for LOLBins (Living Off The Land Binaries) with suspicious arguments
-
-### 5. Maintain Audit Logs
-
-Proper log management is critical:
-- Ensure sufficient disk space for log retention
-- Archive logs regularly for long-term storage
-- Protect logs from tampering (immutable storage)
-- Implement log forwarding to centralized SIEM
-- Retain logs for minimum 90 days (compliance requirement)
-
-### 6. Regular Review and Tuning
-
-Monitoring is not a set-and-forget activity:
-- Review detection rules monthly for false positives
-- Update rules based on new threat intelligence
-- Test detection rules with simulated attacks
-- Document all changes to audit policies
-- Train team on new detection capabilities
+**MITRE Relevance:** T1059 - Command-Line Interface (critical for detecting suspicious commands)
 
 ---
 
-## Screenshots and Documentation
+## 3. Client Workstation Setup (CLIENT11)
 
-Add your lab work screenshots here:
+### Screenshot 8: CLIENT11 VM Overview
+**File:** uploads/8.png
+**Description:** Client workstation (CLIENT11) running Windows 11
+**Key Elements:**
+- VM name: CLIENT11
+- Operating System: Windows 11
+- Domain: VANTAGEHUB.COM
+- Status: Domain-joined
 
-### Screenshot 1: Event ID 4624 - Successful Logon
-
-[Add screenshot of Event Viewer showing Event ID 4624]
-
-Location: screenshots/4624_successful_logon.png
-
-Description: This screenshot shows a successful logon event with logon type, account name, and source information.
-
----
-
-### Screenshot 2: Event ID 4625 - Failed Logon
-
-[Add screenshot of Event Viewer showing Event ID 4625]
-
-Location: screenshots/4625_failed_logon.png
-
-Description: This screenshot shows failed logon attempts with failure reason and account information.
+**Significance:** Shows client workstation is properly configured and domain-joined
 
 ---
 
-### Screenshot 3: Event ID 4688 - Process Creation
+### Screenshot 9: CLIENT11 Desktop
+**File:** uploads/9.png
+**Description:** Windows 11 desktop on CLIENT11
+**Key Elements:**
+- Windows 11 interface
+- System time and date visible
+- Network connectivity confirmed
 
-[Add screenshot of Event Viewer showing Event ID 4688]
-
-Location: screenshots/4688_process_creation.png
-
-Description: This screenshot shows process creation events with process name, command line, and parent process information.
-
----
-
-### Screenshot 4: Local Security Policy Configuration
-
-[Add screenshot of Local Security Policy showing audit policy settings]
-
-Location: screenshots/local_security_policy_config.png
-
-Description: This screenshot shows the configured audit policies in Local Security Policy.
+**Significance:** Confirms Windows 11 is properly installed and running
 
 ---
 
-### Screenshot 5: Audit Policy Verification
+### Screenshot 10: Domain Membership Verification
+**File:** uploads/10.png
+**Description:** System Properties showing domain membership
+**Key Elements:**
+- Computer name: CLIENT11
+- Domain: VANTAGEHUB.COM
+- Status: Domain-joined
+- Verification: Confirmed
 
-[Add screenshot of auditpol command output]
-
-Location: screenshots/auditpol_verification.png
-
-Description: This screenshot shows the output of auditpol /get /category:* verifying audit policies are enabled.
+**Significance:** Verifies CLIENT11 is properly joined to VANTAGEHUB.COM domain
 
 ---
 
-## Lab Report Template
+### Screenshot 11: DNS Configuration
+**File:** uploads/11.png
+**Description:** Network adapter settings showing DNS configuration
+**Key Elements:**
+- DNS Server: 172.16.0.1 (Domain Controller)
+- DHCP: Enabled
+- Network: Host-Only (internal domain network)
 
-Create a LAB_REPORT.md file documenting your findings:
+**Significance:** Confirms DNS is properly configured to point to domain controller
 
-```markdown
-# Security Monitoring Lab Report
+---
 
-## Objective
-Configure Windows audit policies and analyze security events using MITRE ATT&CK framework.
+## 4. Event Viewer - Event 4624 (Successful Logon)
 
-## Environment
-- Host OS: [Your OS]
-- Virtualization: [VirtualBox/VMware]
-- Guest OS: [Windows 10/11]
-- Lab Date: [Date]
+### Screenshot 12: Event 4624 - Overview
+**File:** uploads/12.png
+**Description:** Event Viewer showing Event ID 4624 (Successful Logon)
+**Key Elements:**
+- Event ID: 4624
+- Task Category: Logon
+- Level: Information
+- Computer: CLIENT11.VANTAGEHUB.COM
 
-## Events Captured
+**Significance:** Demonstrates successful logon event capture
 
-### 1. Event ID 4624 - Successful Logon
-- Time: [Timestamp]
-- User: [Username]
-- Logon Type: [Type]
-- Source: [IP/Workstation]
+**MITRE Relevance:** T1078 - Valid Accounts
+
+---
+
+### Screenshot 13: Event 4624 - Details
+**File:** uploads/13.png
+**Description:** Detailed view of Event 4624 with full event information
+**Key Elements:**
+- Logon Type: 2 (Interactive)
+- Account Name: VANTAGEHUB\Administrator
+- Workstation Name: CLIENT11
+- Source IP: 172.16.0.100
+- Logon Time: [Timestamp visible]
+
+**Significance:** Shows complete logon event details for baseline analysis
+
+**MITRE Relevance:** T1078 - Valid Accounts (baseline normal logons)
+
+---
+
+### Screenshot 14: Event 4624 - XML View
+**File:** uploads/14.png
+**Description:** XML representation of Event 4624
+**Key Elements:**
+- Event data in XML format
+- All fields structured and parseable
+- Suitable for SIEM ingestion
+
+**Significance:** Shows event structure for log forwarding and SIEM integration
+
+---
+
+### Screenshot 15: Event 4624 - Multiple Events
+**File:** uploads/15.png
+**Description:** Event Viewer showing multiple 4624 events
+**Key Elements:**
+- Multiple successful logon events
+- Timestamps visible
+- Event count: Multiple entries
+
+**Significance:** Demonstrates event generation and log accumulation
+
+---
+
+## 5. Event Viewer - Event 4625 (Failed Logon)
+
+### Screenshot 16: Event 4625 - Overview
+**File:** uploads/16.png
+**Description:** Event Viewer showing Event ID 4625 (Failed Logon)
+**Key Elements:**
+- Event ID: 4625
+- Task Category: Logon
+- Level: Warning
+- Computer: CLIENT11.VANTAGEHUB.COM
+
+**Significance:** Demonstrates failed logon event capture
+
+**MITRE Relevance:** T1110 - Brute Force
+
+---
+
+### Screenshot 17: Event 4625 - Details
+**File:** uploads/17.png
+**Description:** Detailed view of Event 4625 with failure information
+**Key Elements:**
+- Failure Reason: User account locked out / Wrong password
+- Account Name: [Username attempted]
+- Workstation Name: CLIENT11
+- Source IP: 172.16.0.100
+- Failure Count: 2-3 attempts
+
+**Significance:** Shows complete failed logon event details for brute force detection
+
+**MITRE Relevance:** T1110 - Brute Force (multiple failed attempts)
+
+---
+
+### Screenshot 18: Event 4625 - XML View
+**File:** uploads/18.png
+**Description:** XML representation of Event 4625
+**Key Elements:**
+- Event data in XML format
+- Failure reason field populated
+- Suitable for SIEM ingestion
+
+**Significance:** Shows event structure for log forwarding and SIEM integration
+
+---
+
+### Screenshot 19: Event 4625 - Multiple Events
+**File:** uploads/19.png
+**Description:** Event Viewer showing multiple 4625 events
+**Key Elements:**
+- Multiple failed logon events
+- Timestamps visible
+- Event count: 2-3 entries (brute force simulation)
+
+**Significance:** Demonstrates brute force event generation and detection opportunity
+
+---
+
+## 6. Event Viewer - Event 4688 (Process Creation)
+
+### Screenshot 20: Event 4688 - Notepad
+**File:** uploads/20.png
+**Description:** Event 4688 showing Notepad process creation
+**Key Elements:**
+- Event ID: 4688
+- Task Category: Process Creation
+- Process Name: C:\Program Files\WindowsApps\Microsoft.WindowsNotepad.exe
+- Command Line: notepad.exe
+- Parent Process: explorer.exe
+
+**Significance:** Demonstrates process creation event capture with command-line arguments
+
+**MITRE Relevance:** T1059 - Command-Line Interface
+
+---
+
+### Screenshot 21: Event 4688 - Calculator
+**File:** uploads/21.png
+**Description:** Event 4688 showing Calculator process creation
+**Key Elements:**
+- Event ID: 4688
+- Process Name: C:\Windows\System32\calc.exe
+- Command Line: calc.exe
+- Parent Process: explorer.exe
+
+**Significance:** Shows process creation for system utility
+
+---
+
+### Screenshot 22: Event 4688 - Command Prompt
+**File:** uploads/22.png
+**Description:** Event 4688 showing Command Prompt process creation
+**Key Elements:**
+- Event ID: 4688
+- Process Name: C:\Windows\System32\cmd.exe
+- Command Line: cmd.exe
+- Parent Process: explorer.exe
+
+**Significance:** Demonstrates command-line tool execution capture
+
+**MITRE Relevance:** T1059 - Command-Line Interface (cmd.exe execution)
+
+---
+
+### Screenshot 23: Event 4688 - Details
+**File:** uploads/23.png
+**Description:** Detailed view of Event 4688 with full process information
+**Key Elements:**
+- New Process Name: [Full path]
+- Process ID: [PID]
+- Parent Process Name: [Parent]
+- Command Line: [Full command]
+- User Context: VANTAGEHUB\Administrator
+
+**Significance:** Shows complete process creation event details for threat detection
+
+---
+
+### Screenshot 24: Event 4688 - XML View
+**File:** uploads/24.png
+**Description:** XML representation of Event 4688
+**Key Elements:**
+- Event data in XML format
+- Command-line field populated
+- Parent process information included
+- Suitable for SIEM ingestion
+
+**Significance:** Shows event structure for log forwarding and SIEM integration
+
+---
+
+### Screenshot 25: Event 4688 - Multiple Events
+**File:** uploads/25.png
+**Description:** Event Viewer showing multiple 4688 events
+**Key Elements:**
+- Multiple process creation events
+- Timestamps visible
+- Event count: 3+ entries (Notepad, Calculator, Command Prompt)
+
+**Significance:** Demonstrates process creation event generation and tracking
+
+---
+
+## 7. Audit Policy Verification
+
+### Screenshot 26: auditpol /get /category:*
+**File:** uploads/26.png
+**Description:** Command-line output of auditpol showing all audit policies
+**Key Elements:**
+- Audit Logon: Success and Failure
+- Audit Credential Validation: Success and Failure
+- Audit Process Creation: Success
+- All policies enabled as configured
+
+**Significance:** Verifies audit policies are properly enforced at system level
+
+**MITRE Relevance:** T1078, T1110, T1059 (all techniques covered)
+
+---
+
+### Screenshot 27: gpresult /r /scope computer
+**File:** uploads/27.png
+**Description:** Group Policy result showing applied GPOs
+**Key Elements:**
+- Applied Group Policy Objects:
+  - GPO – Security Monitoring Lab (Audit)
+  - Default Domain Policy
+  - Default Domain Controllers Policy
+- Status: Applied successfully
+
+**Significance:** Verifies GPO is properly applied to CLIENT11
+
+---
+
+## 8. Network Configuration
+
+### Screenshot 28: Network Topology Diagram
+**File:** uploads/28.png
+**Description:** Network architecture diagram showing lab topology
+**Key Elements:**
+- INTERNET connection
+- DC2 with dual NICs (NAT + Host-Only)
+- CLIENT11 with Host-Only connection
+- IP ranges and DNS configuration
+- Virtual network isolation
+
+**Significance:** Shows complete network architecture and segmentation
+
+---
+
+## 9. Active Directory Structure
+
+### Screenshot 29: Active Directory Users and Computers
+**File:** uploads/29.png
+**Description:** Active Directory Users and Computers showing domain structure
+**Key Elements:**
+- Domain: VANTAGEHUB.COM
+- Organizational Units:
+  - Computer - Workstation (contains CLIENT11)
+  - Default containers
+- User accounts visible
+- Computer objects visible
+
+**Significance:** Shows AD structure and OU organization
+
+---
+
+## Event ID Summary
+
+### Event 4624 - Successful Logon
+- Screenshots: 12, 13, 14, 15
 - MITRE Technique: T1078 - Valid Accounts
-- Significance: Indicates successful authentication; baseline for detecting unauthorized access
+- Key Fields: Logon Type, Account Name, Workstation, Source IP
+- Detection: Baseline normal logons, detect anomalies
 
-### 2. Event ID 4625 - Failed Logon
-- Time: [Timestamp]
-- User: [Username]
-- Failure Reason: [Reason]
-- Attempts: [Number]
+### Event 4625 - Failed Logon
+- Screenshots: 16, 17, 18, 19
 - MITRE Technique: T1110 - Brute Force
-- Significance: Security indicator for credential attack attempts
+- Key Fields: Failure Reason, Account Name, Workstation, Source IP
+- Detection: Alert on 5+ failures in 10 minutes
 
-### 3. Event ID 4688 - Process Creation
-- Time: [Timestamp]
-- Process: [Process Name]
-- Parent Process: [Parent]
-- Command Line: [Command]
-- MITRE Technique: T1059 - Command and Scripting Interpreter
-- Significance: Tracks application execution for forensics and malware detection
-
-## Key Findings
-- [Your observations about event patterns]
-- [Security implications of observed events]
-- [How events map to MITRE techniques]
-- [Lessons learned about Windows security monitoring]
-
-## Detection Opportunities
-- [Potential detection rules based on observed events]
-- [Threshold-based alerting strategies]
-- [Correlation opportunities between events]
-
-## Conclusion
-[Summary of lab experience and understanding of security monitoring]
-```
+### Event 4688 - Process Creation
+- Screenshots: 20, 21, 22, 23, 24, 25
+- MITRE Technique: T1059 - Command-Line Interface
+- Key Fields: Process Name, Command Line, Parent Process, User Context
+- Detection: Monitor command-line arguments, LOLBins, parent-child relationships
 
 ---
 
-## Security Insights
+## Configuration Summary
 
-### Why These Events Matter
+### Domain Controller (DC2)
+- Screenshots: 1, 2, 3
+- Status: Properly configured
+- Role: Active Directory Domain Services, DNS Server
 
-Event ID | Purpose | Security Value | MITRE Technique
----------|---------|-----------------|----------------
-4624 | Track successful logins | Detect unauthorized access patterns | T1078 - Valid Accounts
-4625 | Track failed logins | Identify brute force attacks | T1110 - Brute Force
-4688 | Track process creation | Detect malware execution, unauthorized tools | T1059 - Command and Scripting Interpreter
+### Group Policy
+- Screenshots: 4, 5, 6, 7
+- Status: Properly configured
+- Policies: Audit Logon, Credential Validation, Process Creation, Command-line capture
 
-### Real-World Applications
+### Client Workstation (CLIENT11)
+- Screenshots: 8, 9, 10, 11
+- Status: Properly configured
+- Domain: VANTAGEHUB.COM
+- DNS: 172.16.0.1
 
-Incident Response: Correlate events to identify attack timelines and reconstruct adversary actions
+### Verification
+- Screenshots: 26, 27
+- Status: All policies verified
+- Tools: auditpol, gpresult
 
-Forensics: Reconstruct user actions and system activity to understand what happened during a breach
+### Network
+- Screenshots: 28
+- Status: Properly segmented
+- Architecture: Domain-based with network isolation
 
-Threat Detection: Identify suspicious patterns (failed logins, unusual processes) that indicate compromise
-
-Compliance: Meet audit requirements (HIPAA, PCI-DSS, SOC 2) by maintaining security logs
-
-Threat Hunting: Proactively search for indicators of compromise using MITRE ATT&CK techniques
-
----
-
-## Troubleshooting
-
-### Audit Policies Not Appearing in Event Viewer
-
-Solution:
-1. Ensure policies are enabled in secpol.msc
-2. Restart the Event Log service:
-   ```powershell
-   Restart-Service EventLog
-   ```
-3. Generate new events after restart
-
-### Event Viewer Shows No Security Logs
-
-Solution:
-1. Verify you are in the correct log: Windows Logs - Security
-2. Check that audit policies are enabled
-3. Ensure you have administrator privileges
-4. Generate new events (logon, process creation)
-
-### Cannot Access Local Security Policy
-
-Solution:
-1. Run Command Prompt as Administrator
-2. Type: secpol.msc
-3. If unavailable, you may be on Windows Home Edition (requires Pro/Enterprise)
+### Active Directory
+- Screenshots: 29
+- Status: Properly structured
+- OUs: Computer - Workstation (contains CLIENT11)
 
 ---
 
-## Additional Resources
+## MITRE ATT&CK Coverage
 
-### Microsoft Documentation
-- Windows Event IDs: https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/audit-events
-- Advanced Audit Policy Configuration: https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/advanced-security-audit-policy-settings
-- Event Viewer Documentation: https://docs.microsoft.com/en-us/shows/inside/event-viewer
+### T1078 - Valid Accounts
+- Evidence: Screenshots 12, 13, 14, 15
+- Coverage: FULL
+- Detection: Baseline logons, detect anomalies
 
-### MITRE ATT&CK Framework
-- MITRE ATT&CK Home: https://attack.mitre.org/
-- T1078 - Valid Accounts: https://attack.mitre.org/techniques/T1078/
-- T1110 - Brute Force: https://attack.mitre.org/techniques/T1110/
-- T1059 - Command and Scripting Interpreter: https://attack.mitre.org/techniques/T1059/
+### T1110 - Brute Force
+- Evidence: Screenshots 16, 17, 18, 19
+- Coverage: FULL
+- Detection: Alert on multiple failed logons
 
-### Related Topics
-- Windows Security Event Forwarding (WSEF)
-- SIEM Integration (Splunk, ELK Stack)
-- Log Aggregation and Analysis
-- Incident Response Procedures
-- Threat Hunting Methodologies
+### T1059 - Command-Line Interface
+- Evidence: Screenshots 20, 21, 22, 23, 24, 25
+- Coverage: FULL
+- Detection: Monitor command-line arguments, LOLBins
 
 ---
 
-## Lab Checklist
+## Best Practices Demonstrated
 
-- [ ] VirtualBox/VMware installed
-- [ ] Windows 10/11 VM created
-- [ ] Guest Additions/VMware Tools installed
-- [ ] Local Security Policy opened
-- [ ] Audit Logon enabled (Success + Failure)
-- [ ] Audit Credential Validation enabled (Success + Failure)
-- [ ] Audit Process Creation enabled (Success)
-- [ ] Logged out and back in (Event 4624)
-- [ ] Failed login attempts (Event 4625)
-- [ ] Opened Notepad, Calculator, Command Prompt (Event 4688)
-- [ ] Event Viewer opened
-- [ ] Filtered for Event ID 4624
-- [ ] Filtered for Event ID 4625
-- [ ] Filtered for Event ID 4688
-- [ ] Screenshots captured (all 3 event types)
-- [ ] Lab report completed with MITRE mappings
-- [ ] Portfolio documentation ready
+1. Domain-based audit policy enforcement (Screenshots 4, 5, 6, 7)
+2. Centralized policy management via GPO (Screenshots 4, 5)
+3. Command-line argument capture (Screenshots 7, 20-25)
+4. Event verification and validation (Screenshots 26, 27)
+5. Network segmentation (Screenshot 28)
+6. Organizational unit structure (Screenshot 29)
 
 ---
 
 ## Next Steps
 
-After completing this lab:
-
-1. Advanced Auditing: Configure additional audit policies (file access, registry changes)
-
-2. MITRE ATT&CK Expansion: Research additional techniques relevant to your organization
-
-3. Log Forwarding: Set up Windows Event Forwarding to a central server
-
-4. SIEM Integration: Forward logs to Splunk or ELK Stack
-
-5. Threat Hunting: Analyze logs for suspicious patterns using MITRE techniques
-
-6. Detection Rules: Create custom detection rules based on MITRE ATT&CK techniques
-
-7. Automation: Create PowerShell scripts to parse and analyze events
+1. Implement SIEM ingestion for centralized log collection
+2. Create detection rules based on captured events
+3. Expand to additional workstations
+4. Implement Windows Event Forwarding
+5. Develop threat hunting procedures
 
 ---
-
-## License
-
-This lab guide is provided for educational purposes. Use responsibly and only on systems you own or have permission to test.
-
----
-
-## Author
-
-Created as a hands-on cybersecurity learning project.
 
 Last Updated: January 2026
 
----
+Total Screenshots: 29
 
-## Tips for Success
-
-- Take detailed notes during the lab for your portfolio
-- Screenshot everything - visual evidence is valuable
-- Understand the "why" behind each event, not just the "what"
-- Experiment safely - try different scenarios to see how events change
-- Document your findings - this becomes your portfolio piece
-- Research MITRE ATT&CK techniques to understand adversary behavior
-- Think about how attackers would exploit each technique
-- Consider how to detect each technique in your environment
-
----
-
-This lab is a great foundation for security monitoring, threat detection, and incident response skills. Understanding both Windows security events and the MITRE ATT&CK framework will significantly enhance your ability to detect and respond to threats.
+Lab Status: COMPLETE
