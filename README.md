@@ -1,7 +1,7 @@
 # Windows Security Monitoring Lab (Authentication and Process Telemetry)
 
 <p align="center">
-  <img src="architecture/lab-architecture.png"
+  <img src="architecture/architecture.jpeg"
        alt="Windows Security Monitoring Lab Architecture"
        width="750">
 </p>
