@@ -1,11 +1,15 @@
 # Windows Security Monitoring Lab (Authentication and Process Telemetry)
 
 <p align="center">
-  <img src="architecture/lab-architecture.png" alt="Windows Security Monitoring Lab Architecture" width="900">
+  <img src="architecture/lab-architecture.png"
+       alt="Windows Security Monitoring Lab Architecture"
+       width="750">
 </p>
 
 <p align="center">
-  <em>Windows security monitoring lab showing endpoint authentication and process telemetry flowing into security analysis.</em>
+  <em>
+    Windows security monitoring lab showing endpoint authentication and process telemetry flowing into security analysis.
+  </em>
 </p>
 
 ## Overview
