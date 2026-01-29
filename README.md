@@ -13,8 +13,8 @@ The lab focuses on authentication monitoring and process execution visibility, w
 - Producing portfolio-ready evidence via screenshots
 
 ## Environment
-- Hypervisor: VirtualBox (VMware Player supported)
-- OS: Windows 10/11 (Evaluation ISO)
+- Hypervisor: VirtualBox
+- OS: Windows 11 (Evaluation ISO)
 - Log Source: Windows Security Event Log
 - Validation: Event Viewer
 
@@ -37,8 +37,8 @@ Also enable command-line capture for process creation events:
 ## Lab Steps
 
 ### 1) Create the VM
-1. Install VirtualBox (or VMware Player)
-2. Download and install a Windows 10/11 ISO in a new VM
+1. Install VirtualBox
+2. Download and install a Windows 11 ISO in a new VM
 3. Boot the VM and complete Windows setup
 
 ### 2) Enable Audit Policies
