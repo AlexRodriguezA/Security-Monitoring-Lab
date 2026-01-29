@@ -1,4 +1,5 @@
 # Windows Security Monitoring Lab (Authentication and Process Telemetry)
+This lab validates the foundational telemetry required for building authentication and execution-based detections in a SOC environment.
 
 <p align="center">
   <img src="architecture/architecture.jpeg"
