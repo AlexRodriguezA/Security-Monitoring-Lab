@@ -81,19 +81,48 @@ Perform the following actions inside the VM:
    - 4625 (Failed Logon)
    - 4688 (Process Creation)
 
-## Evidence (Screenshots)
-Screenshots are stored in the `screenshots/` folder.
+---
 
-Recommended filenames:
+## Evidence (Screenshots)
+
+The following screenshots provide evidence that Windows authentication and process execution telemetry is being generated and recorded correctly within the lab environment.
+
+Screenshots are stored in the `/screenshots` directory and are organized by event type.
+
+### Successful Logon — Event ID 4624
+
+**File:**
 - `screenshots/4624-successful-logon.png`
+
+**What this demonstrates:**
+- Valid user authentication
+- Logon type visibility
+- Source workstation attribution
+
+---
+
+### Failed Logon — Event ID 4625
+
+**File:**
 - `screenshots/4625-failed-logon.png`
+
+**What this demonstrates:**
+- Failed authentication attempts
+- Account targeting visibility
+- Logon failure reasons
+
+---
+
+### Process Creation — Event ID 4688
+
+**File:**
 - `screenshots/4688-process-creation.png`
 
-Each screenshot should clearly show:
-- Event ID
-- Timestamp
-- Hostname
-- Key fields relevant to the event (account, source IP, process/command line, etc.)
+**What this demonstrates:**
+- Process execution tracking
+- Parent/child process relationships
+- Command-line visibility
+
 
 ## Event Reference
 
