@@ -1,5 +1,13 @@
 # Windows Security Monitoring Lab (Authentication and Process Telemetry)
 
+<p align="center">
+  <img src="architecture/lab-architecture.png" alt="Windows Security Monitoring Lab Architecture" width="900">
+</p>
+
+<p align="center">
+  <em>Windows security monitoring lab showing endpoint authentication and process telemetry flowing into security analysis.</em>
+</p>
+
 ## Overview
 This project demonstrates how to configure Windows audit policies, generate security events, and validate logs commonly used in SOC and blue-team environments.
 
