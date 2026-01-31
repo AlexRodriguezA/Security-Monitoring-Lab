@@ -85,14 +85,16 @@ Perform the following actions inside the VM:
 
 ## Evidence (Screenshots)
 
-The following screenshots provide evidence that Windows authentication and process execution telemetry is being generated and recorded correctly within the lab environment.
+The following screenshots provide evidence that Windows authentication and process execution telemetry
+is being generated and recorded correctly within the lab environment.
 
-Screenshots are stored in the `/screenshots` directory and are organized by event type.
+Screenshots are stored in the `/screenshots` directory and organized by event type.
+
+---
 
 ### Successful Logon — Event ID 4624
 
-**File:**
-- `screenshots/4624-successful-logon.png`
+![Successful Logon Event 4624](screenshots/4624.png)
 
 **What this demonstrates:**
 - Valid user authentication
@@ -103,8 +105,7 @@ Screenshots are stored in the `/screenshots` directory and are organized by even
 
 ### Failed Logon — Event ID 4625
 
-**File:**
-- `screenshots/4625-failed-logon.png`
+![Failed Logon Event 4625](screenshots/4625.png)
 
 **What this demonstrates:**
 - Failed authentication attempts
@@ -115,8 +116,7 @@ Screenshots are stored in the `/screenshots` directory and are organized by even
 
 ### Process Creation — Event ID 4688
 
-**File:**
-- `screenshots/4688-process-creation.png`
+![Process Creation Event 4688](screenshots/4688.png)
 
 **What this demonstrates:**
 - Process execution tracking
