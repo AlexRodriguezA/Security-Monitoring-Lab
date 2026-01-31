@@ -1,6 +1,21 @@
 # Windows Security Monitoring Lab (Authentication and Process Telemetry)
 This lab validates the foundational telemetry required for building authentication and execution-based detections in a SOC environment.
 
+## Video Walkthrough (Start Here)
+
+Before starting the lab, watch this walkthrough.  
+It demonstrates the exact configuration steps and common troubleshooting scenarios in a home lab environment.
+
+This video covers:
+- Enabling Windows Advanced Audit Policies on Windows 11
+- Applying and validating Group Policy
+- Troubleshooting common AD / DNS / GPO issues in VirtualBox
+
+▶️ Watch the walkthrough:  
+https://www.loom.com/share/32f7069ee79a40cf8498a6388781a576
+
+--
+
 <p align="center">
   <img src="architecture/architecture.jpeg"
        alt="Windows Security Monitoring Lab Architecture"
